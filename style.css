@@ -24,6 +24,7 @@ body {
     justify-content: center;
     color: #333;
     align-items: center;
+    overflow-x: hidden;
 }
   
 .quiz_wrapper {
