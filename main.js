@@ -269,9 +269,6 @@ let selectedPackage = ""; // Lưu gói câu hỏi đã chọn
             listSubmit[currentIndex] = index;
             console.log(listSubmit);
             this.handleProgress();
-            // Note
-            ++currentIndex;
-            quizQuestion[currentIndex].click();
           } else {
             return;
           }
