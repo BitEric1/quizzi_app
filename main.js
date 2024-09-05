@@ -306,8 +306,6 @@ let selectedPackage = ""; // Lưu gói câu hỏi đã chọn
     
     handleCheckResults: async function () {
       await this.getResult();
-  
-      // Kiểm tra nếu `results` không có kết quả
       if (!results || results.length === 0) {
           console.error('Không có kết quả nào được trả về từ API.');
           return;
