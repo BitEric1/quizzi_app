@@ -96,7 +96,7 @@ let selectedPackage = ""; // Lưu gói câu hỏi đã chọn
         // console.log("Questions loaded:", questions);
       } catch (error) {
         console.error("Failed to load questions:", error);
-        // alert("Failed to load questions. Please check the API connection or data format.");
+        alert("Failed to load questions. Please check the API connection or data format.");
       }
     },    
     
@@ -182,34 +182,33 @@ let selectedPackage = ""; // Lưu gói câu hỏi đã chọn
     },
     
     renderResults: function () {
+      // Kiểm tra xem currentIndex, listResults[currentIndex] và quizAnswers có hợp lệ không
       if (
         currentIndex !== null &&
-        currentIndex >= 0 &&
-        currentIndex < questions.length &&
         listResults[currentIndex] !== undefined &&
+        listResults[currentIndex] >= 0 && // Chỉ xử lý nếu giá trị >= 0
         quizAnswers.length > 0 &&
         quizAnswers[listResults[currentIndex]] !== undefined
       ) {
-        // Xóa class 'incorrect' khỏi tất cả các phần tử
+        // Loại bỏ class incorrect trước khi thêm class active
         quizAnswers.forEach((item) => {
           item.classList.remove("incorrect");
         });
-    
-        // Thêm class 'active' vào đáp án đúng
         quizAnswers[listResults[currentIndex]].classList.add("active");
       } else {
-        console.error("Error: Cannot access classList because the element is undefined for listResults.");
+        // Xử lý trường hợp giá trị không hợp lệ
+        console.error(
+          "Error: Cannot access classList because the element is undefined for listResults."
+        );
         console.log("Current Index:", currentIndex);
         console.log("List Results:", listResults);
         console.log("Quiz Answers Length:", quizAnswers.length);
       }
     
-      // Kiểm tra nếu đáp án chọn sai và phần tử `quizAnswers` tồn tại
+      // Kiểm tra đáp án đã chọn và kết quả đúng
       if (
         listSubmit[currentIndex] !== undefined &&
         listSubmit[currentIndex] !== listResults[currentIndex] &&
-        listSubmit[currentIndex] >= 0 &&
-        listSubmit[currentIndex] < quizAnswers.length &&
         quizAnswers[listSubmit[currentIndex]] !== undefined
       ) {
         quizAnswers[listSubmit[currentIndex]].classList.add("incorrect");
@@ -217,9 +216,12 @@ let selectedPackage = ""; // Lưu gói câu hỏi đã chọn
         listSubmit[currentIndex] !== listResults[currentIndex] &&
         listSubmit[currentIndex] !== undefined
       ) {
-        console.error("Error: Cannot access classList because the element is undefined for listSubmit.");
+        console.error(
+          "Error: Cannot access classList because the element is undefined for listSubmit."
+        );
       }
-    },     
+    },
+      
         
     handleProgress: function (correct) {
       const r = quizProgress.getAttribute("r");
@@ -267,6 +269,8 @@ let selectedPackage = ""; // Lưu gói câu hỏi đã chọn
             listSubmit[currentIndex] = index;
             console.log(listSubmit);
             this.handleProgress();
+            ++currentIndex;
+            quizQuestion[currentIndex].click();
           } else {
             return;
           }
