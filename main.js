@@ -269,6 +269,7 @@ let selectedPackage = ""; // Lưu gói câu hỏi đã chọn
             listSubmit[currentIndex] = index;
             console.log(listSubmit);
             this.handleProgress();
+            
           } else {
             return;
           }
@@ -333,6 +334,23 @@ let selectedPackage = ""; // Lưu gói câu hỏi đã chọn
       isSubmit = true;
       this.handleProgress(correct);
       this.renderResults();
+
+      if (correct === questions.length) {
+        Swal.fire({
+          title: 'Chúc mừng!',
+          text: 'Bạn đã trả lời đúng tất cả các câu hỏi!',
+          icon: 'success',
+          confirmButtonText: 'Load lại trang',
+          position: 'center', // Đảm bảo thông báo ở chính giữa
+          customClass: {
+            popup: 'swal2-center' // Tùy chọn thêm nếu CSS có vấn đề, giúp xác định vị trí chính giữa
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            location.reload(); // Load lại trang khi người dùng ấn vào nút
+          }
+        });
+      }
   },
   
   handleKeyDown: function () {
